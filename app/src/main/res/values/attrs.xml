@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="FanView">
+        <attr name="hideRunningPercentage" format="boolean" />
+        <attr name="percentageHeight" format="dimension" />
+        <attr name="percentageWidth" format="dimension" />
+        <attr name="percentageColor" format="integer" />
+        <attr name="fanColor" format="integer" />
+    </declare-styleable>
+</resources>
