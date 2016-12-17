@@ -18,6 +18,7 @@
         android:text="Hello World!" />
 
     <com.jsjrobotics.growbox.FanView
+        android:id="@+id/fan_view"
         android:layout_below="@+id/hello"
         custom:hideRunningPercentage="false"
         android:layout_width="100dp"
