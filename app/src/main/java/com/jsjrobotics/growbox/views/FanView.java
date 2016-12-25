@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox;
+package com.jsjrobotics.growbox.views;
 
 
 import android.app.Activity;
@@ -13,12 +13,14 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.view.View;
 
+import com.jsjrobotics.growbox.R;
+
 public class FanView extends View {
     private static final String CALCULATING_MIN_DIAMETER = "FanView must be square. Using minimum x/y size - padding";
     private static final String TAG = FanView.class.getName();
     private static final int DEFAULT_FAN_COLOR = 0xFF880080;
     private static final int RESET_COUNT = 20;
-    private static final int RESET_VALUE = 2 * RESET_COUNT;
+    private int mResetValue = 0;
 
     private int mFanColor;
     private Paint mFanPaint;
@@ -78,7 +80,7 @@ public class FanView extends View {
         if (mIsRotating){
             Handler handler = new Handler(mainLooper);
             invalidate();
-            handler.postDelayed(() -> continueRotation(mainLooper), 20);
+            handler.postDelayed(() -> continueRotation(mainLooper), 200);
         }
     }
 
@@ -111,23 +113,19 @@ public class FanView extends View {
 
         // Blades are numbered clockwise, with blade 1 being the blade closest to Y = 0
         boolean rotate = false;
-        mDrawCount += 1;
 
-        if (mDrawCount > RESET_VALUE){
-            mDrawCount = 0;
-        } else if (mDrawCount >= RESET_COUNT) {
-            canvas.save();
-            canvas.rotate(45, mMidWidth, mMidHeight);
-            rotate = true;
+        canvas.save();
+        canvas.rotate(45* mResetValue, mMidWidth, mMidHeight);
+        mResetValue += 1;
+        if (mResetValue > 8){
+            mResetValue = 0;
         }
 
         drawFirstBlade(canvas);
         drawThirdBlade(canvas);
         drawSecondBlade(canvas);
         drawFourthBlade(canvas);
-        if (rotate) {
-            canvas.restore();
-        }
+        canvas.restore();
 
 
     }

@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">GrowBox</string>
+    <string name="set_water_schedule">Set Water Schedule</string>
+    <string name="water_now">Water now</string>
+    <string name="watering_interval">Watering Interval</string>
+    <string name="watering_length">Watering length</string>
+    <string name="save">Save</string>
 </resources>
