@@ -30,6 +30,29 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:layout_height="@dimen/control_button_height"
+        android:padding="2dp">
+        <Button
+            android:id="@+id/delete"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/delete"
+            android:textSize="@dimen/control_text_size"
+            android:textStyle="bold"/>
+
+        <Button
+            android:id="@+id/clear_entry"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="match_parent"
+            android:text="@string/clear"
+            android:textSize="@dimen/control_text_size"
+            android:textStyle="bold"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="@dimen/dialog_button_height"
         android:padding="5dp">
         <Button

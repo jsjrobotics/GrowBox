@@ -15,9 +15,21 @@ public abstract class FullKeyboardDialog {
         EditText display = (EditText) dialog.findViewById(R.id.display);
         View numberRow = dialog.findViewById(R.id.number_row);
         View qwertyInput = dialog.findViewById(R.id.qwerty_keyboard);
+        View delete = dialog.findViewById(R.id.delete);
+        View clearEntry = dialog.findViewById(R.id.clear_entry);
         setupNumberRowClickListeners(display, numberRow);
         setupQwertyClickListeners(display, qwertyInput);
+        setupDeleteButton(display, delete);
+        setupClearEntry(display, clearEntry);
         return dialog;
+    }
+
+    private static void setupClearEntry(EditText display, View view) {
+
+    }
+
+    private static void setupDeleteButton(EditText display, View view) {
+
     }
 
     private static void setupQwertyClickListeners(EditText display, View view) {
