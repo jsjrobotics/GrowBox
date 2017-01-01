@@ -5,37 +5,37 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_z"
         style="@style/qwerty_key"
         android:text="@string/z"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_x"
         style="@style/qwerty_key"
         android:text="@string/x"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_c"
         style="@style/qwerty_key"
         android:text="@string/c"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_v"
         style="@style/qwerty_key"
         android:text="@string/v"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_b"
         style="@style/qwerty_key"
         android:text="@string/b"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_n"
         style="@style/qwerty_key"
         android:text="@string/n"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_m"
         style="@style/qwerty_key"
         android:text="@string/m"/>

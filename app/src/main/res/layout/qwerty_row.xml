@@ -10,47 +10,47 @@
         style="@style/qwerty_key"
         android:text="@string/q" />
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_w"
         style="@style/qwerty_key"
         android:text="@string/w"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_e"
         style="@style/qwerty_key"
         android:text="@string/e"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_r"
         style="@style/qwerty_key"
         android:text="@string/r"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_t"
         style="@style/qwerty_key"
         android:text="@string/t"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_y"
         style="@style/qwerty_key"
         android:text="@string/y"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_u"
         style="@style/qwerty_key"
         android:text="@string/u"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_i"
         style="@style/qwerty_key"
         android:text="@string/i"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_o"
         style="@style/qwerty_key"
         android:text="@string/o"/>
 
-    <TextView
+    <Button
         android:id="@+id/qwerty_p"
         style="@style/qwerty_key"
         android:text="@string/p"/>

@@ -1,7 +1,5 @@
-package com.jsjrobotics.growbox.views;
+package com.jsjrobotics.growbox.views.dialogInput;
 
-import android.util.SparseIntArray;
-import android.view.KeyEvent;
 import android.view.View;
 
 import com.jsjrobotics.growbox.R;
@@ -37,11 +35,10 @@ import static android.view.KeyEvent.KEYCODE_Y;
 import static android.view.KeyEvent.KEYCODE_Z;
 
 
-public class QwertyKeyboard {
+public class QwertyKeyboard implements AndroidThingsDialogInput{
     private final View mRoot;
 
     private final Map<Integer, View> mViews = new HashMap<>();
-    // Keycode --> Id for view
     private static final Map<Integer,Integer> sIdMap;
 
     static {
@@ -77,17 +74,22 @@ public class QwertyKeyboard {
 
     public QwertyKeyboard(View root) {
         mRoot = root;
-        for (Integer keyCode : sIdMap.keySet()){
-            View view = findKey(root, keyCode);
-            mViews.put(keyCode, view);
-        }
+        buildViewMap();
     }
 
-    private View findKey(View v, int keycode) {
-        View view = v.findViewById(sIdMap.get(keycode));
-        if (view == null){
-            throw new IllegalArgumentException("Keycode doesn't exist -->" + KeyEvent.keyCodeToString(keycode));
-        }
-        return view;
+
+    @Override
+    public Map<Integer, View> getViewMap() {
+        return mViews;
+    }
+
+    @Override
+    public Map<Integer, Integer> getIdMap() {
+        return sIdMap;
+    }
+
+    @Override
+    public View getRootView() {
+        return mRoot;
     }
 }
