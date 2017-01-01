@@ -6,6 +6,7 @@ import android.widget.GridView;
 
 import com.jsjrobotics.growbox.R;
 import com.jsjrobotics.growbox.views.FanView;
+import com.jsjrobotics.growbox.views.FullKeyboardView;
 
 public class MainActivity extends Activity {
 
@@ -20,6 +21,7 @@ public class MainActivity extends Activity {
         mGridView = (GridView) findViewById(R.id.grid_view);
         mAdapter = new GrowboxFragmentAdapter(this);
         mGridView.setAdapter(mAdapter);
+        new FullKeyboardView().show(getFragmentManager(), "tag");
     }
 
 

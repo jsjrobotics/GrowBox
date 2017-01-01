@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="horizontal"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/qwerty_a"
+        style="@style/qwerty_key"
+        android:text="@string/a"/>
+
+    <TextView
+        android:id="@+id/qwerty_s"
+        style="@style/qwerty_key"
+        android:text="@string/s"/>
+
+    <TextView
+        android:id="@+id/qwerty_d"
+        style="@style/qwerty_key"
+        android:text="@string/d"/>
+
+    <TextView
+        android:id="@+id/qwerty_f"
+        style="@style/qwerty_key"
+        android:text="@string/f"/>
+
+    <TextView
+        android:id="@+id/qwerty_g"
+        style="@style/qwerty_key"
+        android:text="@string/g"/>
+
+    <TextView
+        android:id="@+id/qwerty_h"
+        style="@style/qwerty_key"
+        android:text="@string/h"/>
+
+    <TextView
+        android:id="@+id/qwerty_j"
+        style="@style/qwerty_key"
+        android:text="@string/j"/>
+
+    <TextView
+        android:id="@+id/qwerty_k"
+        style="@style/qwerty_key"
+        android:text="@string/k"/>
+
+    <TextView
+        android:id="@+id/qwerty_l"
+        style="@style/qwerty_key"
+        android:text="@string/l"/>
+</LinearLayout>

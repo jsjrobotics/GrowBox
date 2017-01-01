@@ -21,10 +21,8 @@ public interface AndroidThingsDisplay {
         return view;
     }
 
-    default void createView(FrameLayout display){
-        TextView noImplementation = new TextView(display.getContext());
-        noImplementation.setText("No Implementation");
-        display.addView(noImplementation);
+    default void createView(FrameLayout display) {
+        LayoutInflater inflater = LayoutInflater.from(display.getContext());
+        inflater.inflate(R.layout.no_implementation, display, true);
     }
-
 }

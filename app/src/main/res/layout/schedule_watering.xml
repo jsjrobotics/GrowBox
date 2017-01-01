@@ -6,9 +6,11 @@
     android:layout_height="match_parent">
 
     <EditText
+        android:id="@+id/watering_interval"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:hint="@string/watering_interval"/>
+        android:hint="@string/watering_interval"
+        android:inputType="phone"/>
 
     <EditText
         android:layout_width="match_parent"
