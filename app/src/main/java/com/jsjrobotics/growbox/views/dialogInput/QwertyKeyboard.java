@@ -1,6 +1,7 @@
 package com.jsjrobotics.growbox.views.dialogInput;
 
 import android.view.View;
+import android.widget.Button;
 
 import com.jsjrobotics.growbox.R;
 
@@ -38,7 +39,7 @@ import static android.view.KeyEvent.KEYCODE_Z;
 public class QwertyKeyboard implements AndroidThingsDialogInput{
     private final View mRoot;
 
-    private final Map<Integer, View> mViews = new HashMap<>();
+    private final Map<Integer, Button> mViews = new HashMap<>();
     private static final Map<Integer,Integer> sIdMap;
 
     static {
@@ -79,7 +80,7 @@ public class QwertyKeyboard implements AndroidThingsDialogInput{
 
 
     @Override
-    public Map<Integer, View> getViewMap() {
+    public Map<Integer, Button> getViewMap() {
         return mViews;
     }
 

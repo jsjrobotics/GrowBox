@@ -7,8 +7,7 @@
         android:id="@+id/init"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Next Scheduled Watering"
-        android:background="#FF0f"/>
+        android:text="Next Scheduled Watering"/>
 
     <include
         android:id="@+id/view1"

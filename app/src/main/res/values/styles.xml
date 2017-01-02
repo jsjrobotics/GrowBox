@@ -11,6 +11,10 @@
     <style name="number_row" parent="input_dialog_key">
     </style>
 
+    <style name="number_pad" parent="input_dialog_key">
+        <item name="android:layout_height">match_parent</item>
+    </style>
+
     <style name="qwerty_key"  parent="input_dialog_key">
     </style>
 
