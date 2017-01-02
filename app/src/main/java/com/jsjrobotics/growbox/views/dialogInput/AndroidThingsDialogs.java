@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TimePicker;
@@ -50,12 +51,14 @@ public abstract class AndroidThingsDialogs {
     public static AlertDialog showNumberPad(Context context, Consumer<String> onSubmit, Consumer<Void> onNoEntry){
         AlertDialog.Builder builder = new AlertDialog.Builder(context);
         builder.setOnCancelListener(dialog -> onNoEntry.accept(null));
-        AlertDialog dialog = builder.setView(R.layout.number_pad).show();
+        View view = LayoutInflater.from(context).inflate(R.layout.number_pad, null);
+        AlertDialog dialog = builder.setView(view).show();
         View submit = dialog.findViewById(R.id.submit);
         View cancel = dialog.findViewById(R.id.cancel);
         EditText display = (EditText) dialog.findViewById(R.id.display);
         View delete = dialog.findViewById(R.id.delete);
         View clearEntry = dialog.findViewById(R.id.clear_entry);
+        setupNumberRowClickListeners(display, view);
         setupCancelButton(dialog, cancel);
         setupSubmitButton(dialog, display, submit, onSubmit);
         setupDeleteButton(display, delete);
