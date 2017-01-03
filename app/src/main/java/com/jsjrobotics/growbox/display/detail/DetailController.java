@@ -29,6 +29,7 @@ public class DetailController implements AndroidThingsDisplay {
         mButton2.setText(waterNow);
         mButton1.setOnClickListener(ignored -> mDetailDisplay.displayWateringSchedule());
         mButton2.setOnClickListener(ignored -> mDetailDisplay.waterNow());
+
     }
 
 }

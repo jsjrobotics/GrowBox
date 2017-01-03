@@ -2,16 +2,10 @@ package com.jsjrobotics.growbox;
 
 import android.content.SharedPreferences;
 
-import com.jsjrobotics.growbox.display.detail.WateringSchedule;
-
-import java.security.InvalidAlgorithmParameterException;
-import java.security.InvalidKeyException;
-import java.security.NoSuchAlgorithmException;
-import java.util.HashSet;
+import java.nio.charset.Charset;
 import java.util.Optional;
 
 import javax.crypto.Cipher;
-import javax.crypto.NoSuchPaddingException;
 import javax.crypto.spec.IvParameterSpec;
 import javax.crypto.spec.SecretKeySpec;
 
@@ -30,10 +24,8 @@ public class EncryptedSharedPreferences {
 
     private EncryptedSharedPreferences(SharedPreferences sharedPreferences) {
         mSharedPreferences = sharedPreferences;
-        byte[] secretKey = getKey();
-        byte[] initilizationVector = getInitilizationVector();
-        mKey = new SecretKeySpec(secretKey, getCode());
-        mInitVector = new IvParameterSpec(initilizationVector);
+        mKey = new SecretKeySpec(getSecretKey(), getCode());
+        mInitVector = new IvParameterSpec(getInitilizationVector());
         Optional<Cipher> cipher = Optional.empty();
         try {
              cipher = Optional.ofNullable(Cipher.getInstance(getCipherCode()));
@@ -43,21 +35,20 @@ public class EncryptedSharedPreferences {
         mCipher = cipher;
     }
 
-    private byte[] getKey() {
-        return "TheKey".getBytes();
+    private byte[] getSecretKey() {
+        return "abcdefghijklmnopqrstuvwxyzasdfgh".getBytes();
     }
 
     private byte[] getInitilizationVector() {
-        return "InitilizationVector".getBytes();
+        return "InitilizationVec".getBytes();
     }
 
     private String getCode() {
-        String[] in = {"a", "b", "c", "d", "e", "s"};
-        return in[0] + in[4] + in[5];
+        return "abcdefghijklmnopqrstuvwxyzasdfgh";
     }
 
     private String getCipherCode() {
-        return "AES/OFB/ISO10126Padding";
+        return "AES/CFB/NoPadding";
     }
 
     public void write(SharedPreferenceObject value) {
@@ -66,17 +57,9 @@ public class EncryptedSharedPreferences {
             return;
         }
         EncryptedValue encryptedValue = valueToWrite.get();
-        String out = "";
-        for (byte b : encryptedValue.encrypted){
-            out += (char) b;
-        }
+        String out = encryptedValue.flatten();
 
         SharedPreferences.Editor editor = mSharedPreferences.edit();
-        editor.putInt(
-                value.getCipherKey(),
-                encryptedValue.encryptedLength
-        );
-
         editor.putString(
                 value.getKey(),
                 out
@@ -92,10 +75,13 @@ public class EncryptedSharedPreferences {
         if (!savedValue.isPresent()){
             return Optional.empty();
         }
+        EncryptedValue decrypted = new EncryptedValue(0,null).inflate(savedValue.get());
+        return decrypt(decrypted.encrypted, decrypted.encryptedLength);
+    }
+
+    private Optional<String> decrypt(byte[] encrypted, int encryptedLength){
         Cipher cipher = mCipher.get();
         try {
-            byte[] encrypted = savedValue.get().getBytes();
-            int encryptedLength = mSharedPreferences.getInt(value.getCipherKey(), -1);
             cipher.init(Cipher.DECRYPT_MODE, mKey, mInitVector);
             byte[] decrypted = new byte[cipher.getOutputSize(encryptedLength)];
             int dec_len = cipher.update(encrypted, 0, encryptedLength, decrypted, 0);
@@ -105,7 +91,6 @@ public class EncryptedSharedPreferences {
             e.printStackTrace();
             return Optional.empty();
         }
-
     }
 
     private Optional<EncryptedValue> encrypt(String data) {
@@ -124,5 +109,9 @@ public class EncryptedSharedPreferences {
             e.printStackTrace();
             return Optional.empty();
         }
+    }
+
+    public Charset getCharset() {
+        return java.nio.charset.StandardCharsets.UTF_8;
     }
 }
