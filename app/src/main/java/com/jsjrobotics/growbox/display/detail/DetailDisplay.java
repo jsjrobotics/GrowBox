@@ -1,27 +1,24 @@
 package com.jsjrobotics.growbox.display.detail;
 
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
-import com.jsjrobotics.growbox.SharedPreferenceObject;
 import com.jsjrobotics.growbox.display.AndroidThingsDisplay;
 import com.jsjrobotics.growbox.R;
 import com.jsjrobotics.growbox.model.SharedPreferenceManager;
 import com.jsjrobotics.growbox.views.dialogInput.AndroidThingsDialogs;
 
 import java.util.Optional;
-import java.util.function.Consumer;
 
 public class DetailDisplay implements AndroidThingsDisplay {
 
     private View mView1;
     private View mView2;
-    private View mInit;
+    private View mIdle;
     private EditText mWateringInterval;
     private EditText mWateringLength;
     private Button mSave;
@@ -30,11 +27,10 @@ public class DetailDisplay implements AndroidThingsDisplay {
     public void createView(FrameLayout display){
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
         inflater.inflate(R.layout.detail_display, display, true);
-        mInit = display.findViewById(R.id.init);
+        mIdle = display.findViewById(R.id.idle);
         mView1 = display.findViewById(R.id.view1);
         mView2 = display.findViewById(R.id.view2);
-        mView1.setVisibility(View.GONE);
-        mView2.setVisibility(View.GONE);
+        displayIdle();
         mWateringInterval = (EditText) display.findViewById(R.id.watering_interval);
         mWateringLength = (EditText) display.findViewById(R.id.watering_length);
         mSave = (Button) display.findViewById(R.id.save);
@@ -60,10 +56,13 @@ public class DetailDisplay implements AndroidThingsDisplay {
         });
 
         mSave.setOnClickListener(v -> {
-            int interval = Integer.valueOf(mWateringInterval.getText().toString());
-            int length = Integer.valueOf(mWateringLength.getText().toString());
+            String intervalInput = mWateringInterval.getText().toString().replaceAll("\\D","");
+            String scheduleInput = mWateringLength.getText().toString().replaceAll("\\D","");
+            int interval = Integer.valueOf(intervalInput);
+            int length = Integer.valueOf(scheduleInput);
             WateringSchedule schedule = new WateringSchedule(interval,length);
             SharedPreferenceManager.setWateringSchedule(v.getContext(), schedule);
+            displayIdle();
         });
     }
 
@@ -77,20 +76,40 @@ public class DetailDisplay implements AndroidThingsDisplay {
         );
     }
 
-    private void showNumberPad(Context context) {
-        AndroidThingsDialogs.showNumberPad(context, mWateringInterval::setText, ignored -> {});
+    private String wateringLengthSuffix() {
+        return " minutes each watering lasts for";
     }
 
-    public void displayWateringSchedule(){
+    private void showNumberPad(Context context) {
+        AndroidThingsDialogs.showNumberPad(
+                context,
+                value -> {
+                    mWateringInterval.setText(value);
+                },
+                ignored -> {}
+        );
+    }
+
+    private String wateringIntervalSuffix() {
+        return " minutes between waterings";
+    }
+
+    void displayIdle(){
+        mIdle.setVisibility(View.VISIBLE);
+        mView1.setVisibility(View.GONE);
+        mView2.setVisibility(View.GONE);
+    }
+
+    void displayWateringSchedule(){
         mView1.setVisibility(View.VISIBLE);
-        mInit.setVisibility(View.GONE);
+        mIdle.setVisibility(View.GONE);
         mView2.setVisibility(View.GONE);
     }
 
 
-    public void waterNow(){
+    void waterNow(){
         mView1.setVisibility(View.GONE);
-        mInit.setVisibility(View.GONE);
+        mIdle.setVisibility(View.GONE);
         mView2.setVisibility(View.VISIBLE);
     }
 }

@@ -1,6 +1,6 @@
 package com.jsjrobotics.growbox.display.detail;
 
-import com.jsjrobotics.growbox.SharedPreferenceObject;
+import com.jsjrobotics.growbox.sharedPreferences.SharedPreferenceObject;
 
 public class WateringSchedule implements SharedPreferenceObject {
     private static final String WATERING_SCHEDULE_KEY = "WATERING_SCHEDULE";

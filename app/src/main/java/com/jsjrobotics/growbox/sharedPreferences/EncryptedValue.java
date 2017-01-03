@@ -1,17 +1,17 @@
-package com.jsjrobotics.growbox;
+package com.jsjrobotics.growbox.sharedPreferences;
 
-public class EncryptedValue implements Flattenable<EncryptedValue>{
-    public final int encryptedLength;
+public class EncryptedValue implements Flattenable<EncryptedValue> {
     public final byte[] encrypted;
+    private final int encryptedLength;
 
-    public EncryptedValue(int encryptedLength, byte[] encrypted) {
-        this.encryptedLength = encryptedLength;
+    public EncryptedValue(byte[] encrypted) {
+        this.encryptedLength = encrypted == null ? -1 : encrypted.length;
         this.encrypted = encrypted;
     }
 
     @Override
     public String flatten() {
-        String result = String.valueOf(encrypted) + ":";
+        String result = String.valueOf(encryptedLength) + ":";
         for (int index = 0; index < encrypted.length; index++){
             byte current = encrypted[index];
             result += String.valueOf(current);
@@ -31,6 +31,6 @@ public class EncryptedValue implements Flattenable<EncryptedValue>{
             String current = split[index+1];
             value[index] = Byte.decode(current);
         }
-        return new EncryptedValue(dataLength, value);
+        return new EncryptedValue(value);
     }
 }

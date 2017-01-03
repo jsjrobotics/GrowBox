@@ -1,26 +1,37 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<GridLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:alignmentMode="alignBounds"
+    android:useDefaultMargins="true"
+    android:columnCount="2">
 
+    <TextView
+        android:layout_column="0"
+        android:layout_gravity="left"
+        android:text="Minutes between Waterings:"/>
     <EditText
+        android:layout_column="1"
         android:id="@+id/watering_interval"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:hint="@string/watering_interval"
         android:inputType="phone"/>
 
+    <TextView
+        android:layout_column="0"
+        android:layout_gravity="center"
+        android:text="Length of each watering:"/>
     <EditText
+        android:layout_column="1"
         android:id="@+id/watering_length"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_gravity="right"
         android:hint="@string/watering_length"/>
 
+
     <Button
+        android:layout_column="1"
         android:id="@+id/save"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_gravity="center"
         android:text="@string/save"/>
-</LinearLayout>
+</GridLayout>

@@ -1,12 +1,9 @@
 package com.jsjrobotics.growbox.model;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-import com.jsjrobotics.growbox.EncryptedSharedPreferences;
+import com.jsjrobotics.growbox.sharedPreferences.EncryptedSharedPreferences;
 import com.jsjrobotics.growbox.display.detail.WateringSchedule;
-
-import java.util.Optional;
 
 public class SharedPreferenceManager {
     private static final String SHARED_PREF_FILENAME = "GROWBOX_SHARED_PREF";
