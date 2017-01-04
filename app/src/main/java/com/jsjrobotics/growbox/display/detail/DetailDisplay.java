@@ -1,73 +1,69 @@
 package com.jsjrobotics.growbox.display.detail;
 
-import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.FrameLayout;
 
+import com.jsjrobotics.growbox.dataStructures.WateringSchedule;
 import com.jsjrobotics.growbox.display.AndroidThingsDisplay;
 import com.jsjrobotics.growbox.R;
 import com.jsjrobotics.growbox.model.SharedPreferenceManager;
-import com.jsjrobotics.growbox.views.dialogInput.AndroidThingsDialogs;
-
-import java.util.Optional;
+import com.jsjrobotics.growbox.views.dialogInput.SelectedTime;
 
 public class DetailDisplay implements AndroidThingsDisplay {
 
-    private View mView1;
-    private View mView2;
-    private View mIdle;
 
     private Button mSave;
     private ScheduleWateringView mScheduleView;
     private NextWateringView mNextWateringView;
     private FrameLayout mRoot;
+    private WateringNowView mWateringNowView;
 
     @Override
     public void createView(FrameLayout display){
         mRoot = display;
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
         inflater.inflate(R.layout.detail_display, display, true);
-        mIdle = display.findViewById(R.id.idle);
-        mNextWateringView = new NextWateringView(mIdle);
-        mView1 = display.findViewById(R.id.view1);
-        mScheduleView = new ScheduleWateringView(mView1);
-        mView2 = display.findViewById(R.id.view2);
+        View idle = display.findViewById(R.id.idle);
+        mNextWateringView = new NextWateringView(idle);
+        View view1 = display.findViewById(R.id.view1);
+        mScheduleView = new ScheduleWateringView(view1);
+        View view2 = display.findViewById(R.id.view2);
+        mWateringNowView = new WateringNowView(view2);
         displayIdle();
 
         mSave = (Button) display.findViewById(R.id.save);
 
-
         mSave.setOnClickListener(v -> {
             String intervalInput = mScheduleView.getInterval();
             String lengthInput = mScheduleView.getLength();
+            SelectedTime nextStartTime = mScheduleView.getNextWateringTime();
             int interval = Integer.valueOf(intervalInput);
             int length = Integer.valueOf(lengthInput);
-            WateringSchedule schedule = new WateringSchedule(interval,length);
+            WateringSchedule schedule = new WateringSchedule(nextStartTime, interval,length);
             SharedPreferenceManager.setWateringSchedule(v.getContext(), schedule);
             displayIdle();
         });
     }
 
-    void displayIdle(){
-        mIdle.setVisibility(View.VISIBLE);
+    private void displayIdle(){
+        mNextWateringView.setVisibility(View.VISIBLE);
         mNextWateringView.refreshDisplay(mRoot.getContext());
-        mView1.setVisibility(View.GONE);
-        mView2.setVisibility(View.GONE);
+        mScheduleView.setVisibility(View.GONE);
+        mWateringNowView.setVisibility(View.GONE);
     }
 
     void displayWateringSchedule(){
-        mView1.setVisibility(View.VISIBLE);
-        mIdle.setVisibility(View.GONE);
-        mView2.setVisibility(View.GONE);
+        mScheduleView.setVisibility(View.VISIBLE);
+        mNextWateringView.setVisibility(View.GONE);
+        mWateringNowView.setVisibility(View.GONE);
     }
 
 
     void waterNow(){
-        mView1.setVisibility(View.GONE);
-        mIdle.setVisibility(View.GONE);
-        mView2.setVisibility(View.VISIBLE);
+        mScheduleView.setVisibility(View.GONE);
+        mNextWateringView.setVisibility(View.GONE);
+        mWateringNowView.setVisibility(View.VISIBLE);
     }
 }

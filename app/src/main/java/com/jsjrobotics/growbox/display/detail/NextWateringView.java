@@ -5,34 +5,40 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.jsjrobotics.growbox.R;
+import com.jsjrobotics.growbox.dataStructures.WateringSchedule;
 import com.jsjrobotics.growbox.model.SharedPreferenceManager;
 
 import java.util.Optional;
 
-public class NextWateringView {
+class NextWateringView {
     private final TextView mNextWatering;
     private final TextView mWateringLength;
+    private final View mParent;
 
-    public NextWateringView(View parent) {
+    NextWateringView(View parent) {
+        mParent = parent;
         mNextWatering = (TextView) parent.findViewById(R.id.next_scheduled_watering);
         mWateringLength = (TextView) parent.findViewById(R.id.watering_length);
         refreshDisplay(parent.getContext());
     }
 
-    public void refreshDisplay(Context context) {
-        WateringSchedule restored = new WateringSchedule();
-        Optional<WateringSchedule> read = SharedPreferenceManager.getSharedPreferences(context).read(restored);
+    void refreshDisplay(Context context) {
+        Optional<WateringSchedule> read = SharedPreferenceManager.getSharedPreferences(context).read(WateringSchedule.invalid());
         read.ifPresent(v -> {
             setWateringInterval(String.valueOf(v.wateringIntervalMinutes));
             setWateringLength(String.valueOf(v.wateringLengthMinutes));
         });
     }
 
-    public void setWateringInterval(String wateringInterval) {
+    private void setWateringInterval(String wateringInterval) {
         mNextWatering.setText(wateringInterval);
     }
 
-    public void setWateringLength(String wateringLength) {
+    private void setWateringLength(String wateringLength) {
         mWateringLength.setText(wateringLength);
+    }
+
+    void setVisibility(int visibility) {
+        mParent.setVisibility(visibility);
     }
 }

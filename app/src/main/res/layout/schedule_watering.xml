@@ -8,6 +8,16 @@
         android:gravity="center">
         <TextView
             android:layout_width="wrap_content"
+            android:text="Next Watering Time"/>
+        <EditText
+            android:id="@+id/next_watering_time"
+            android:layout_width="wrap_content"
+            android:gravity="center_horizontal"/>
+    </TableRow>
+    <TableRow
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
             android:text="Minutes between Waterings:"/>
         <EditText
             android:layout_width="wrap_content"
