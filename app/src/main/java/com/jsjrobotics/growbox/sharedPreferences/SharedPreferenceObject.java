@@ -1,6 +1,10 @@
 package com.jsjrobotics.growbox.sharedPreferences;
 
-public interface SharedPreferenceObject {
+import java.util.Optional;
+
+public interface SharedPreferenceObject<T> {
     String getKey();
     String getData();
+
+    T instantiate(String string);
 }

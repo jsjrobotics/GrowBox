@@ -68,13 +68,17 @@ public class EncryptedSharedPreferences {
 
 
 
-    public Optional<String> read(SharedPreferenceObject value){
+    public <T> Optional<T> read(SharedPreferenceObject<T> value){
         Optional<String> savedValue = Optional.ofNullable(mSharedPreferences.getString(value.getKey(), null));
         if (!savedValue.isPresent()){
             return Optional.empty();
         }
         EncryptedValue decrypted = new EncryptedValue(null).inflate(savedValue.get());
-        return decrypt(decrypted.encrypted, decrypted.encrypted.length);
+        Optional<String> storedValue = decrypt(decrypted.encrypted, decrypted.encrypted.length);
+        if (storedValue.isPresent()){
+            return Optional.of(value.instantiate(storedValue.get()));
+        }
+        return Optional.empty();
     }
 
     private Optional<String> decrypt(byte[] encrypted, int encryptedLength){

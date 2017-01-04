@@ -5,7 +5,10 @@ import android.view.View;
 import android.widget.EditText;
 
 import com.jsjrobotics.growbox.R;
+import com.jsjrobotics.growbox.model.SharedPreferenceManager;
 import com.jsjrobotics.growbox.views.dialogInput.AndroidThingsDialogs;
+
+import java.util.Optional;
 
 public class ScheduleWateringView {
     private final EditText mWateringInterval;
@@ -27,13 +30,25 @@ public class ScheduleWateringView {
         });
         mWateringLength.setOnClickListener(v -> showIntervalInput(v.getContext()));
 
+        refreshDisplay(parent.getContext());
+
+    }
+
+    public void refreshDisplay(Context context) {
+        WateringSchedule restored = new WateringSchedule();
+        Optional<WateringSchedule> read = SharedPreferenceManager.getSharedPreferences(context).read(restored);
+        read.ifPresent(v -> {
+            mWateringInterval.setText(String.valueOf(v.wateringIntervalMinutes));
+            mWateringLength.setText(String.valueOf(v.wateringLengthMinutes));
+        });
     }
 
     private void showNumberPad(Context context) {
         AndroidThingsDialogs.showNumberPad(
                 context,
                 mWateringInterval::setText,
-                ignored -> {}
+                ignored -> {
+                }
         );
     }
 

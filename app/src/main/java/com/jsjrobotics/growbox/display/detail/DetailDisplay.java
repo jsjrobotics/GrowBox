@@ -23,9 +23,11 @@ public class DetailDisplay implements AndroidThingsDisplay {
     private Button mSave;
     private ScheduleWateringView mScheduleView;
     private NextWateringView mNextWateringView;
+    private FrameLayout mRoot;
 
     @Override
     public void createView(FrameLayout display){
+        mRoot = display;
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
         inflater.inflate(R.layout.detail_display, display, true);
         mIdle = display.findViewById(R.id.idle);
@@ -37,13 +39,6 @@ public class DetailDisplay implements AndroidThingsDisplay {
 
         mSave = (Button) display.findViewById(R.id.save);
 
-        WateringSchedule restored = new WateringSchedule();
-        Optional<String> read = SharedPreferenceManager.getSharedPreferences(display.getContext()).read(restored);
-        read.ifPresent(v -> {
-            String[] oldValues = v.split(":");
-            mNextWateringView.setWateringInterval(oldValues[0]);
-            mNextWateringView.setWateringLength(oldValues[1]);
-        });
 
         mSave.setOnClickListener(v -> {
             String intervalInput = mScheduleView.getInterval();
@@ -58,6 +53,7 @@ public class DetailDisplay implements AndroidThingsDisplay {
 
     void displayIdle(){
         mIdle.setVisibility(View.VISIBLE);
+        mNextWateringView.refreshDisplay(mRoot.getContext());
         mView1.setVisibility(View.GONE);
         mView2.setVisibility(View.GONE);
     }
