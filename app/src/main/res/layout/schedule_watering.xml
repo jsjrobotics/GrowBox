@@ -1,37 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridLayout
+<TableLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:alignmentMode="alignBounds"
-    android:useDefaultMargins="true"
-    android:columnCount="2">
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 
-    <TextView
-        android:layout_column="0"
-        android:layout_gravity="left"
-        android:text="Minutes between Waterings:"/>
-    <EditText
-        android:layout_column="1"
-        android:id="@+id/watering_interval"
-        android:layout_gravity="right"
-        android:hint="@string/watering_interval"
-        android:inputType="phone"/>
-
-    <TextView
-        android:layout_column="0"
-        android:layout_gravity="center"
-        android:text="Length of each watering:"/>
-    <EditText
-        android:layout_column="1"
-        android:id="@+id/watering_length"
-        android:layout_gravity="right"
-        android:hint="@string/watering_length"/>
+    <TableRow
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Minutes between Waterings:"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:id="@+id/watering_interval"
+            android:gravity="center_horizontal"
+            android:hint="@string/watering_interval"
+            android:inputType="phone"/>
+    </TableRow>
 
 
-    <Button
-        android:layout_column="1"
-        android:id="@+id/save"
-        android:layout_gravity="center"
-        android:text="@string/save"/>
-</GridLayout>
+    <TableRow
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Length of each watering:"/>
+        <EditText
+            android:layout_width="wrap_content"
+            android:id="@+id/watering_length"
+            android:gravity="center_horizontal"
+            android:hint="@string/watering_length"/>
+    </TableRow>
+
+    <TableRow
+        android:gravity="center">
+        <Button
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:id="@+id/save"
+            android:gravity="center"
+            android:text="@string/save"/>
+    </TableRow>
+
+</TableLayout>

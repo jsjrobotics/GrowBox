@@ -19,79 +19,41 @@ public class DetailDisplay implements AndroidThingsDisplay {
     private View mView1;
     private View mView2;
     private View mIdle;
-    private EditText mWateringInterval;
-    private EditText mWateringLength;
+
     private Button mSave;
+    private ScheduleWateringView mScheduleView;
+    private NextWateringView mNextWateringView;
 
     @Override
     public void createView(FrameLayout display){
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
         inflater.inflate(R.layout.detail_display, display, true);
         mIdle = display.findViewById(R.id.idle);
+        mNextWateringView = new NextWateringView(mIdle);
         mView1 = display.findViewById(R.id.view1);
+        mScheduleView = new ScheduleWateringView(mView1);
         mView2 = display.findViewById(R.id.view2);
         displayIdle();
-        mWateringInterval = (EditText) display.findViewById(R.id.watering_interval);
-        mWateringLength = (EditText) display.findViewById(R.id.watering_length);
+
         mSave = (Button) display.findViewById(R.id.save);
-        mWateringInterval.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus){
-                showNumberPad(v.getContext());
-            }
-        });
-        mWateringInterval.setOnClickListener(v -> showNumberPad(v.getContext()));
-        mWateringLength.setOnFocusChangeListener((v, hasFocus) -> {
-            if (hasFocus) {
-                showIntervalInput(v.getContext());
-            }
-        });
-        mWateringLength.setOnClickListener(v -> showIntervalInput(v.getContext()));
 
         WateringSchedule restored = new WateringSchedule();
         Optional<String> read = SharedPreferenceManager.getSharedPreferences(display.getContext()).read(restored);
         read.ifPresent(v -> {
             String[] oldValues = v.split(":");
-            mWateringInterval.setText(oldValues[0]);
-            mWateringLength.setText(oldValues[1]);
+            mNextWateringView.setWateringInterval(oldValues[0]);
+            mNextWateringView.setWateringLength(oldValues[1]);
         });
 
         mSave.setOnClickListener(v -> {
-            String intervalInput = mWateringInterval.getText().toString().replaceAll("\\D","");
-            String scheduleInput = mWateringLength.getText().toString().replaceAll("\\D","");
+            String intervalInput = mScheduleView.getInterval();
+            String lengthInput = mScheduleView.getLength();
             int interval = Integer.valueOf(intervalInput);
-            int length = Integer.valueOf(scheduleInput);
+            int length = Integer.valueOf(lengthInput);
             WateringSchedule schedule = new WateringSchedule(interval,length);
             SharedPreferenceManager.setWateringSchedule(v.getContext(), schedule);
             displayIdle();
         });
-    }
-
-    private void showIntervalInput(Context context) {
-        AndroidThingsDialogs.showTimePicker(
-                context,
-                date -> {
-                    mWateringLength.setText("" + date.hour + date.minute);
-                },
-                ignored -> {}
-        );
-    }
-
-    private String wateringLengthSuffix() {
-        return " minutes each watering lasts for";
-    }
-
-    private void showNumberPad(Context context) {
-        AndroidThingsDialogs.showNumberPad(
-                context,
-                value -> {
-                    mWateringInterval.setText(value);
-                },
-                ignored -> {}
-        );
-    }
-
-    private String wateringIntervalSuffix() {
-        return " minutes between waterings";
     }
 
     void displayIdle(){

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merge xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="match_parent"
+    android:layout_gravity="center">
 
-    <TextView
+    <include
         android:id="@+id/idle"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="Next Scheduled Watering"/>
+        layout="@layout/next_scheduled_watering"/>
 
     <include
         android:id="@+id/view1"
@@ -21,4 +22,4 @@
         android:layout_height="match_parent"
         layout="@layout/watering_now"/>
 
-</merge>
+</FrameLayout>

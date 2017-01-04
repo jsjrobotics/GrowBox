@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
+
+    <TableRow
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Next Schedule Watering:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/next_scheduled_watering"
+            android:text="4:00pm"/>
+    </TableRow>
+
+
+    <TableRow
+        android:gravity="center">
+        <TextView
+            android:layout_width="wrap_content"
+            android:text="Length of each watering:"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:id="@+id/watering_length"
+            android:text="20 minutes"/>
+    </TableRow>
+</TableLayout>
