@@ -7,4 +7,9 @@
         <attr name="percentageColor" format="integer" />
         <attr name="fanColor" format="integer" />
     </declare-styleable>
+
+    <declare-styleable name="Axis">
+        <attr name="spaceBetweenDashes" format="dimension" />
+        <attr name="numberOfDashes" format="integer"/>
+    </declare-styleable>
 </resources>
