@@ -47,6 +47,8 @@ public class DetailDisplay implements AndroidThingsDisplay {
         });
     }
 
+
+
     private void displayIdle(){
         mNextWateringView.setVisibility(View.VISIBLE);
         mNextWateringView.refreshDisplay(mRoot.getContext());

@@ -69,6 +69,27 @@ public class Axis extends View {
         init();
     }
 
+    @Override
+    protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
+        super.onMeasure();
+        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
+        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
+        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
+        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
+        int paddingWidth = getPaddingLeft() + getPaddingRight();
+        int paddingHeight = getPaddingBottom() + getPaddingTop();
+
+        // Try for a width based on our minimum
+        int suggestedMinWidth = paddingWidth + getSuggestedMinimumWidth();
+        int w = resolveSizeAndState(suggestedMinWidth, widthMeasureSpec, 1);
+
+        // Whatever the width ends up being, ask for a height that would let the pie
+        // get as big as it can
+        int suggestedMinHeight = paddingHeight + getSuggestedMinimumHeight();
+        int h = resolveSizeAndState(suggestedMinHeight, heightMeasureSpec, 1);
+
+        setMeasuredDimension(widthSize, heightSize);
+    }
 
     @Override
     public void onSizeChanged(int width, int height, int oldWidth, int oldHeight){
