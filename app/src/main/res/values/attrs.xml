@@ -11,5 +11,9 @@
     <declare-styleable name="Axis">
         <attr name="spaceBetweenDashes" format="dimension" />
         <attr name="numberOfDashes" format="integer"/>
+        <attr name="isVertical" format="boolean"/>
+
     </declare-styleable>
+
+
 </resources>

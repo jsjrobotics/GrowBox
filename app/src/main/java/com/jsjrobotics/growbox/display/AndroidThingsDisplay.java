@@ -5,24 +5,20 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 import android.widget.TextView;
 
 import com.jsjrobotics.growbox.R;
 
 public interface AndroidThingsDisplay {
-    default View getView(Activity activity, View convertView, ViewGroup parent){
+    default View getView(Activity activity, View convertView, GridView parent){
         int height = (activity).getWindowManager().getDefaultDisplay().getHeight();
         LayoutInflater inflater = LayoutInflater.from(activity);
-        FrameLayout view = (FrameLayout) inflater.inflate(R.layout.default_display_window, parent, false);
-        view.setMinimumHeight(height/2);
-        int backgroundColor = activity.getResources().getColor(R.color.colorBackground, activity.getTheme());
-        view.setBackgroundColor(backgroundColor);
-        createView(view);
-        return view;
+        return createView(parent);
     }
 
-    default void createView(FrameLayout display) {
+    default View createView(GridView display) {
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
-        inflater.inflate(R.layout.no_implementation, display, true);
+        return inflater.inflate(R.layout.no_implementation, display, false);
     }
 }

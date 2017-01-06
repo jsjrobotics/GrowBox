@@ -31,11 +31,13 @@ public class Axis extends View {
     private Rect mBaseLineRectangle;
     private int mDashWidth;
     private ArrayList<Rect> mObjectsToDraw;
+    private boolean mIsVertical;
 
     public Axis(Context context, int numberOfDashes, int pixelsBetweenDash) {
         super(context);
         mNumberOfSections = numberOfDashes;
         mPixelsBetweenDash = pixelsBetweenDash;
+        mIsVertical = false;
         init();
     }
 
@@ -65,13 +67,14 @@ public class Axis extends View {
         }
 
         mPixelsBetweenDash = typedArray.getInt(R.styleable.Axis_spaceBetweenDashes, INVALID);
+        mIsVertical = typedArray.getBoolean(R.styleable.Axis_isVertical, false );
+
         typedArray.recycle();
         init();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        super.onMeasure();
         int widthMode = MeasureSpec.getMode(widthMeasureSpec);
         int heightMode = MeasureSpec.getMode(heightMeasureSpec);
         int widthSize = MeasureSpec.getSize(widthMeasureSpec);
@@ -79,16 +82,19 @@ public class Axis extends View {
         int paddingWidth = getPaddingLeft() + getPaddingRight();
         int paddingHeight = getPaddingBottom() + getPaddingTop();
 
-        // Try for a width based on our minimum
-        int suggestedMinWidth = paddingWidth + getSuggestedMinimumWidth();
-        int w = resolveSizeAndState(suggestedMinWidth, widthMeasureSpec, 1);
+        int width = widthSize;
+        if (widthMode == MeasureSpec.UNSPECIFIED && widthSize == 0){
+            width = (int) dpToPx(getContext(), 100) + paddingWidth;
+        }
 
-        // Whatever the width ends up being, ask for a height that would let the pie
-        // get as big as it can
-        int suggestedMinHeight = paddingHeight + getSuggestedMinimumHeight();
-        int h = resolveSizeAndState(suggestedMinHeight, heightMeasureSpec, 1);
+        int height = heightSize;
+        if (heightMode == MeasureSpec.UNSPECIFIED && heightSize == 0){
+            height = (int) dpToPx(getContext(), 100) + paddingHeight;
+        }
 
-        setMeasuredDimension(widthSize, heightSize);
+        int w = resolveSizeAndState(width, widthMeasureSpec, 0);
+        int h = resolveSizeAndState(height, heightMeasureSpec, 0);
+        setMeasuredDimension(w, h);
     }
 
     @Override
@@ -113,18 +119,31 @@ public class Axis extends View {
     }
 
     private Rect buildBaseLineRectangle(int width, int height){
-        int padding = (int) ((DEFAULT_BASELINE_HEIGHT_PERCENTAGE * height) / 2);
-        return new Rect(0,padding,width,height-padding);
+        if (mIsVertical){
+            int tempWidth = width;
+            width = height;
+            height = tempWidth;
+        }
+        int baseLineHeight = (int) dpToPx(getContext(), 2);
+        int midHeight = height/2;
+        int lineWidth = width - getPaddingLeft() - getPaddingRight();
+        return new Rect(getPaddingLeft(),midHeight-baseLineHeight, lineWidth ,midHeight+baseLineHeight);
     }
 
     private List<Rect> buildDashes(int width, int height){
+        if (mIsVertical){
+            int tempWidth = width;
+            width = height;
+            height = tempWidth;
+        }
         int padding = (int) ((DEFAULT_DASH_HEIGHT_PERCENTAGE * height) / 2);
         ArrayList<Rect> result = new ArrayList<>();
-        int spacesBetweenDashes = width / mNumberOfSections;
+        int baseLineWidth = width - getPaddingLeft() - getPaddingRight();
+        int spacesBetweenDashes = baseLineWidth / mNumberOfSections;
         int startX = 0;
         for (int index = 0; index < mNumberOfSections; index++){
-            result.add(new Rect(startX, padding, startX + mDashWidth, height - padding));
             startX += spacesBetweenDashes;
+            result.add(new Rect(startX, padding, startX + mDashWidth, height - padding));
         }
         return result;
     }

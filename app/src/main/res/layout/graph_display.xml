@@ -10,7 +10,8 @@
         android:visibility="gone"
         android:id="@+id/graph" />
     <com.jsjrobotics.growbox.views.graph.Axis
+        android:padding="20dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="100dp"
         app:numberOfDashes="3"/>
 </LinearLayout>

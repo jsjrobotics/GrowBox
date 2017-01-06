@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.GridView;
 
 import com.jsjrobotics.growbox.dataStructures.WateringSchedule;
 import com.jsjrobotics.growbox.display.AndroidThingsDisplay;
@@ -17,23 +18,22 @@ public class DetailDisplay implements AndroidThingsDisplay {
     private Button mSave;
     private ScheduleWateringView mScheduleView;
     private NextWateringView mNextWateringView;
-    private FrameLayout mRoot;
     private WateringNowView mWateringNowView;
+    private View mRoot;
 
     @Override
-    public void createView(FrameLayout display){
-        mRoot = display;
-        LayoutInflater inflater = LayoutInflater.from(display.getContext());
-        inflater.inflate(R.layout.detail_display, display, true);
-        View idle = display.findViewById(R.id.idle);
+    public View createView(GridView parent){
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        mRoot = inflater.inflate(R.layout.detail_display, parent, false);
+        View idle = mRoot.findViewById(R.id.idle);
         mNextWateringView = new NextWateringView(idle);
-        View view1 = display.findViewById(R.id.view1);
+        View view1 = mRoot.findViewById(R.id.view1);
         mScheduleView = new ScheduleWateringView(view1);
-        View view2 = display.findViewById(R.id.view2);
+        View view2 = mRoot.findViewById(R.id.view2);
         mWateringNowView = new WateringNowView(view2);
         displayIdle();
 
-        mSave = (Button) display.findViewById(R.id.save);
+        mSave = (Button) mRoot.findViewById(R.id.save);
 
         mSave.setOnClickListener(v -> {
             String intervalInput = mScheduleView.getInterval();
@@ -45,6 +45,7 @@ public class DetailDisplay implements AndroidThingsDisplay {
             SharedPreferenceManager.setWateringSchedule(v.getContext(), schedule);
             displayIdle();
         });
+        return mRoot;
     }
 
 
