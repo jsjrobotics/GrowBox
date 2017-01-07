@@ -1,22 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="400dp">
+    android:layout_height="wrap_content">
 
-    <com.jsjrobotics.growbox.views.graph.GraphView
+    <com.jsjrobotics.growbox.customViews.graph.GraphView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="#FF0"
+        android:id="@+id/graph" />
+
+    <com.jsjrobotics.growbox.customViews.graph.VerticalAxis
+        android:layout_width="30dp"
+        android:layout_height="100dp"
+        android:visibility="gone"
+
+        app:numberOfDashes="3"/>
+
+    <com.jsjrobotics.growbox.customViews.graph.HorizontalAxis
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:visibility="gone"
-        android:id="@+id/graph" />
-
-    <com.jsjrobotics.growbox.views.graph.VerticalAxis
-        android:layout_width="30dp"
-        android:layout_height="100dp"
         app:numberOfDashes="3"/>
-
-    <com.jsjrobotics.growbox.views.graph.HorizontalAxis
-        android:layout_width="match_parent"
-        android:layout_height="200dp"
-        app:numberOfDashes="3"/>
-</FrameLayout>
+</LinearLayout>

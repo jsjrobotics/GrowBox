@@ -15,5 +15,12 @@
 
     </declare-styleable>
 
+    <declare-styleable name="GraphView">
+        <attr name="xPartitions" format="integer" />
+        <attr name="yPartitions" format="integer" />
+        <attr name="axisThickness" format="dimension"/>
+        <attr name="dashThickness" format="dimension" />
+
+    </declare-styleable>
 
 </resources>

@@ -1,9 +1,7 @@
-package com.jsjrobotics.growbox.views.dialogInput;
+package com.jsjrobotics.growbox.customViews.dialogInput;
 
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.EditText;
@@ -11,7 +9,6 @@ import android.widget.TimePicker;
 
 import com.jsjrobotics.growbox.R;
 
-import java.util.function.BiConsumer;
 import java.util.function.Consumer;
 
 public abstract class AndroidThingsDialogs {

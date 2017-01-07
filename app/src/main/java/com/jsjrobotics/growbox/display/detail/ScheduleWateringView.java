@@ -6,9 +6,9 @@ import android.widget.EditText;
 
 import com.jsjrobotics.growbox.R;
 import com.jsjrobotics.growbox.dataStructures.WateringSchedule;
-import com.jsjrobotics.growbox.model.SharedPreferenceManager;
-import com.jsjrobotics.growbox.views.dialogInput.AndroidThingsDialogs;
-import com.jsjrobotics.growbox.views.dialogInput.SelectedTime;
+import com.jsjrobotics.growbox.sharedPreferences.SharedPreferenceManager;
+import com.jsjrobotics.growbox.customViews.dialogInput.AndroidThingsDialogs;
+import com.jsjrobotics.growbox.customViews.dialogInput.SelectedTime;
 
 import java.util.Optional;
 

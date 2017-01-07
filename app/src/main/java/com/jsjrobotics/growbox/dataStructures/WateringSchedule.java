@@ -1,9 +1,9 @@
 package com.jsjrobotics.growbox.dataStructures;
 
 import com.jsjrobotics.growbox.sharedPreferences.SharedPreferenceObject;
-import com.jsjrobotics.growbox.views.dialogInput.SelectedTime;
+import com.jsjrobotics.growbox.customViews.dialogInput.SelectedTime;
 
-import static com.jsjrobotics.growbox.model.SharedPreferenceManager.SHARED_PREF_TOKEN_DIVIDER;
+import static com.jsjrobotics.growbox.sharedPreferences.SharedPreferenceManager.SHARED_PREF_TOKEN_DIVIDER;
 
 public class WateringSchedule implements SharedPreferenceObject<WateringSchedule> {
     private static final String WATERING_SCHEDULE_KEY = "WATERING_SCHEDULE";

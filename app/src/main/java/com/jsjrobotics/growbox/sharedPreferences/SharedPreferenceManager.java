@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.model;
+package com.jsjrobotics.growbox.sharedPreferences;
 
 import android.content.Context;
 

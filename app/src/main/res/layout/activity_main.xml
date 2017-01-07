@@ -1,10 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<GridView xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/grid_view"
-    android:layout_width="match_parent"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
     android:layout_height="match_parent"
-    android:columnWidth="90dp"
-    android:numColumns="2"
-    android:stretchMode="columnWidth"
-    tools:context="com.jsjrobotics.growbox.display.MainActivity"/>
+    android:layout_width="match_parent">
+    <include
+        layout="@layout/action_bar"/>
+    <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/grid_view"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:numColumns="2"
+        android:stretchMode="columnWidth"
+        tools:context="com.jsjrobotics.growbox.MainActivity"/>
+</LinearLayout>
+

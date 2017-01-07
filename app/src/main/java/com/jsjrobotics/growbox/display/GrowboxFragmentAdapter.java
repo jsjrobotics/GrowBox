@@ -26,13 +26,9 @@ public class GrowboxFragmentAdapter extends BaseAdapter {
     private List<AndroidThingsDisplay> buildDisplay() {
         GraphDisplay graphDisplay = new GraphDisplay();
         GraphController graphController = new GraphController(graphDisplay);
-        DetailDisplay detailDisplay = new DetailDisplay();
-        DetailController detailController = new DetailController(detailDisplay);
         return Arrays.asList(
                 graphDisplay,
-                graphController,
-                detailDisplay,
-                detailController
+                graphController
         );
     }
 

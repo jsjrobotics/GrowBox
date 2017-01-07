@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.views;
+package com.jsjrobotics.growbox.customViews;
 
 
 import android.app.Activity;

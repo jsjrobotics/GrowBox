@@ -3,14 +3,13 @@ package com.jsjrobotics.growbox.display.detail;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 
 import com.jsjrobotics.growbox.dataStructures.WateringSchedule;
 import com.jsjrobotics.growbox.display.AndroidThingsDisplay;
 import com.jsjrobotics.growbox.R;
-import com.jsjrobotics.growbox.model.SharedPreferenceManager;
-import com.jsjrobotics.growbox.views.dialogInput.SelectedTime;
+import com.jsjrobotics.growbox.sharedPreferences.SharedPreferenceManager;
+import com.jsjrobotics.growbox.customViews.dialogInput.SelectedTime;
 
 public class DetailDisplay implements AndroidThingsDisplay {
 

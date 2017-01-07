@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.views.dialogInput;
+package com.jsjrobotics.growbox.customViews.dialogInput;
 
 import android.view.View;
 import android.widget.Button;

@@ -1,8 +1,7 @@
-package com.jsjrobotics.growbox.views;
+package com.jsjrobotics.growbox.customViews;
 
 
 import android.content.Context;
-import android.content.res.TypedArray;
 import android.util.TypedValue;
 
 public abstract class ViewUtils {

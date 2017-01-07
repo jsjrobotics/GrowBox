@@ -2,13 +2,12 @@ package com.jsjrobotics.growbox.display.graph;
 
 import android.view.LayoutInflater;
 import android.view.View;
-import android.widget.FrameLayout;
 import android.widget.GridView;
 
 
 import com.jsjrobotics.growbox.R;
 import com.jsjrobotics.growbox.display.AndroidThingsDisplay;
-import com.jsjrobotics.growbox.views.graph.GraphView;
+import com.jsjrobotics.growbox.customViews.graph.GraphView;
 
 import java.util.ArrayList;
 import java.util.List;

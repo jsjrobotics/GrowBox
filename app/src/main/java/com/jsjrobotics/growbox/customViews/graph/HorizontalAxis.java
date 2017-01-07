@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.views.graph;
+package com.jsjrobotics.growbox.customViews.graph;
 
 
 import android.content.Context;
@@ -13,8 +13,6 @@ import com.jsjrobotics.growbox.R;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.jsjrobotics.growbox.views.ViewUtils.dpToPx;
 
 
 public class HorizontalAxis extends View {
@@ -71,25 +69,8 @@ public class HorizontalAxis extends View {
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
-        int widthMode = MeasureSpec.getMode(widthMeasureSpec);
-        int heightMode = MeasureSpec.getMode(heightMeasureSpec);
-        int widthSize = MeasureSpec.getSize(widthMeasureSpec);
-        int heightSize = MeasureSpec.getSize(heightMeasureSpec);
-        int paddingWidth = getPaddingLeft() + getPaddingRight();
-        int paddingHeight = getPaddingBottom() + getPaddingTop();
-
-        int width = widthSize;
-        if (widthMode == MeasureSpec.UNSPECIFIED && widthSize == 0){
-            width = (int) dpToPx(getContext(), 100) + paddingWidth;
-        }
-
-        int height = heightSize;
-        if (heightMode == MeasureSpec.UNSPECIFIED && heightSize == 0){
-            height = (int) dpToPx(getContext(), 100) + paddingHeight;
-        }
-
-        int w = resolveSizeAndState(width, widthMeasureSpec, 0);
-        int h = resolveSizeAndState(height, heightMeasureSpec, 0);
+        int w = resolveSizeAndState(Integer.MAX_VALUE, widthMeasureSpec, 0);
+        int h = resolveSizeAndState(Integer.MAX_VALUE, heightMeasureSpec, 0);
         setMeasuredDimension(w, h);
     }
 

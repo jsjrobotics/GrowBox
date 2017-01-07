@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.views.dialogInput;
+package com.jsjrobotics.growbox.customViews.dialogInput;
 
 public class SelectedTime {
     public final int hour;

@@ -1,4 +1,4 @@
-package com.jsjrobotics.growbox.views.graph;
+package com.jsjrobotics.growbox.customViews.graph;
 
 
 import android.content.Context;
@@ -14,7 +14,7 @@ import com.jsjrobotics.growbox.R;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.jsjrobotics.growbox.views.ViewUtils.dpToPx;
+import static com.jsjrobotics.growbox.customViews.ViewUtils.dpToPx;
 
 
 public class VerticalAxis extends View {

@@ -1,11 +1,14 @@
-package com.jsjrobotics.growbox.display;
+package com.jsjrobotics.growbox;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
 import android.widget.GridView;
 
 import com.jsjrobotics.growbox.R;
-import com.jsjrobotics.growbox.views.FanView;
+import com.jsjrobotics.growbox.customViews.FanView;
+import com.jsjrobotics.growbox.display.GrowboxFragmentAdapter;
 
 public class MainActivity extends Activity {
 
@@ -21,6 +24,5 @@ public class MainActivity extends Activity {
         mAdapter = new GrowboxFragmentAdapter(this);
         mGridView.setAdapter(mAdapter);
     }
-
 
 }

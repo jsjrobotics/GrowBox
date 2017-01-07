@@ -1,8 +1,7 @@
 <resources>
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="android:Theme.Material.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
+    <style name="AppTheme" parent="android:Theme.Material.Light.NoActionBar.Fullscreen">
         <item name="colorPrimary">@color/colorPrimary</item>
         <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
         <item name="colorAccent">@color/colorAccent</item>
@@ -28,5 +27,13 @@
         <item name="android:padding">5dp</item>
         <item name="android:textStyle">bold</item>
     </style>
+
+    <style name="action_bar_text">
+        <item name="android:textColor">#FFF</item>
+        <item name="android:fontFamily">roboto</item>
+        <item name="android:textSize">14sp</item>
+    </style>
+
+    <style name="settings_button" parent="android:Widget.Material.Light.Button.Borderless"></style>
 
 </resources>
