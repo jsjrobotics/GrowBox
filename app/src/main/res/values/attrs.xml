@@ -8,7 +8,7 @@
         <attr name="fanColor" format="integer" />
     </declare-styleable>
 
-    <declare-styleable name="Axis">
+    <declare-styleable name="HorizontalAxis">
         <attr name="spaceBetweenDashes" format="dimension" />
         <attr name="numberOfDashes" format="integer"/>
         <attr name="isVertical" format="boolean"/>

@@ -17,10 +17,11 @@ import java.util.List;
 import static com.jsjrobotics.growbox.views.ViewUtils.dpToPx;
 
 
-public class Axis extends View {
+public class VerticalAxis extends View {
     private static final int DEFAULT_COLOR = 0xFF880080;
-    private static final double DEFAULT_DASH_HEIGHT_PERCENTAGE = 0.9;
-    private static final double DEFAULT_BASELINE_HEIGHT_PERCENTAGE = 0.1;
+    private static final double DEFAULT_DASH_HEIGHT_PERCENTAGE = 0.05;
+    private static final double DEFAULT_DASH_WIDTH_PERCENTAGE = 0.7;
+    private static final double DEFAULT_BASELINE_WIDTH_PERCENTAGE = 0.2;
     private static final int INVALID = -1;
     private static final int DEFAULT_DASH_WIDTH_DP = 2;
     private int mNumberOfSections;
@@ -31,27 +32,25 @@ public class Axis extends View {
     private Rect mBaseLineRectangle;
     private int mDashWidth;
     private ArrayList<Rect> mObjectsToDraw;
-    private boolean mIsVertical;
 
-    public Axis(Context context, int numberOfDashes, int pixelsBetweenDash) {
+    public VerticalAxis(Context context, int numberOfDashes, int pixelsBetweenDash) {
         super(context);
         mNumberOfSections = numberOfDashes;
         mPixelsBetweenDash = pixelsBetweenDash;
-        mIsVertical = false;
         init();
     }
 
-    public Axis(Context context, AttributeSet attrs) {
+    public VerticalAxis(Context context, AttributeSet attrs) {
         super(context, attrs);
         extractXmlAttributes(attrs);
     }
 
-    public Axis(Context context, AttributeSet attrs, int defStyleAttr) {
+    public VerticalAxis(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         extractXmlAttributes(attrs);
     }
 
-    public Axis(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
+    public VerticalAxis(Context context, AttributeSet attrs, int defStyleAttr, int defStyleRes) {
         super(context, attrs, defStyleAttr, defStyleRes);
         extractXmlAttributes(attrs);
     }
@@ -59,16 +58,14 @@ public class Axis extends View {
     private void extractXmlAttributes(AttributeSet attrs) {
         TypedArray typedArray = getContext().getTheme().obtainStyledAttributes(
                 attrs,
-                R.styleable.Axis,
+                R.styleable.HorizontalAxis,
                 0, 0);
-        int numberOfDashes = typedArray.getInt(R.styleable.Axis_numberOfDashes, INVALID);
+        int numberOfDashes = typedArray.getInt(R.styleable.HorizontalAxis_numberOfDashes, INVALID);
         if (numberOfDashes != INVALID){
             mNumberOfSections =  numberOfDashes +1;
         }
 
-        mPixelsBetweenDash = typedArray.getInt(R.styleable.Axis_spaceBetweenDashes, INVALID);
-        mIsVertical = typedArray.getBoolean(R.styleable.Axis_isVertical, false );
-
+        mPixelsBetweenDash = typedArray.getInt(R.styleable.HorizontalAxis_spaceBetweenDashes, INVALID);
         typedArray.recycle();
         init();
     }
@@ -99,9 +96,9 @@ public class Axis extends View {
 
     @Override
     public void onSizeChanged(int width, int height, int oldWidth, int oldHeight){
-        mDashHeight = (int) (DEFAULT_DASH_HEIGHT_PERCENTAGE * height);
-        mDashWidth = (int) dpToPx(getContext(), DEFAULT_DASH_WIDTH_DP);
-        mPixelsBetweenDash = width / mNumberOfSections ;
+        mDashHeight = (int)(height * DEFAULT_DASH_HEIGHT_PERCENTAGE);
+        mDashWidth = (int) (width * DEFAULT_DASH_WIDTH_PERCENTAGE);
+        mPixelsBetweenDash = height / mNumberOfSections ;
         mObjectsToDraw = new ArrayList<>();
         mObjectsToDraw.add(buildBaseLineRectangle(width, height));
         mObjectsToDraw.addAll(buildDashes(width, height));
@@ -119,31 +116,22 @@ public class Axis extends View {
     }
 
     private Rect buildBaseLineRectangle(int width, int height){
-        if (mIsVertical){
-            int tempWidth = width;
-            width = height;
-            height = tempWidth;
-        }
-        int baseLineHeight = (int) dpToPx(getContext(), 2);
-        int midHeight = height/2;
-        int lineWidth = width - getPaddingLeft() - getPaddingRight();
-        return new Rect(getPaddingLeft(),midHeight-baseLineHeight, lineWidth ,midHeight+baseLineHeight);
+        int midWidth = width/2;
+        int lineWidth = (width - getPaddingLeft() - getPaddingRight());
+        int widthOffset = (int) ((lineWidth* DEFAULT_BASELINE_WIDTH_PERCENTAGE)/2);
+        return new Rect(midWidth - widthOffset,getPaddingTop(), midWidth + widthOffset ,getPaddingTop()+height);
     }
 
     private List<Rect> buildDashes(int width, int height){
-        if (mIsVertical){
-            int tempWidth = width;
-            width = height;
-            height = tempWidth;
-        }
-        int padding = (int) ((DEFAULT_DASH_HEIGHT_PERCENTAGE * height) / 2);
         ArrayList<Rect> result = new ArrayList<>();
-        int baseLineWidth = width - getPaddingLeft() - getPaddingRight();
-        int spacesBetweenDashes = baseLineWidth / mNumberOfSections;
-        int startX = 0;
+        int baseLineHeight = height - getPaddingTop() - getPaddingBottom();
+        int spacesBetweenDashes = baseLineHeight / mNumberOfSections;
+        int startY = 0;
+        int midWidth = width/2;
+        int widthOffset = mDashWidth/2;
         for (int index = 0; index < mNumberOfSections; index++){
-            startX += spacesBetweenDashes;
-            result.add(new Rect(startX, padding, startX + mDashWidth, height - padding));
+            startY += spacesBetweenDashes;
+            result.add(new Rect(midWidth - widthOffset, startY, midWidth + widthOffset, startY + mDashHeight));
         }
         return result;
     }
