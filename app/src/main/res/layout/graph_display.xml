@@ -7,8 +7,9 @@
     <com.jsjrobotics.growbox.customViews.graph.GraphView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#FF0"
-        android:id="@+id/graph" />
+        android:id="@+id/graph"
+        app:axisThickness="10dp"
+        app:xPartitions="40"/>
 
     <com.jsjrobotics.growbox.customViews.graph.VerticalAxis
         android:layout_width="30dp"

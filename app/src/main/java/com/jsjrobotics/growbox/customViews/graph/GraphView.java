@@ -20,21 +20,21 @@ public class GraphView extends View {
     private static final int INVALID = -1;
     private static final float AXIS_THICKNESS_MULTIPLIER = 0.1f;
     private static final int DEFAULT_COLOR = 0xFF880080;
+    private static final float DEFAULT_DASH_HEIGHT_MULTIPLIER = 0.5f;
+    private static final boolean DRAW_GRID_LINES = true;
     private List<GraphNode> mData;
-    private int mAxisThickness;
-    private int mDashThickness;
-    private int mNumberPartitionsX;
-    private int mNumberPartitionsY;
+    private int mAxisThickness = INVALID;
+    private int mDashThickness = INVALID;
+    private int mNumberPartitionsX = INVALID;
+    private int mNumberPartitionsY = INVALID;
     private int DEFAULT_NUMBER_PARTITIONS = 3;
     private List<Rect> mObjectsToDraw;
     private Paint mPaint;
+    private int mDashHeight = INVALID;
+    private float mDashLengthMultiplier = INVALID;
 
     public GraphView(Context context) {
         super(context);
-        mAxisThickness = INVALID;
-        mDashThickness = INVALID;
-        mNumberPartitionsX = INVALID;
-        mNumberPartitionsY = INVALID;
     }
 
     public GraphView(Context context, AttributeSet attrs) {
@@ -58,9 +58,10 @@ public class GraphView extends View {
                 R.styleable.GraphView,
                 0, 0);
         mAxisThickness = typedArray.getDimensionPixelSize(R.styleable.GraphView_axisThickness, INVALID);
-        mNumberPartitionsX = typedArray.getDimensionPixelSize(R.styleable.GraphView_xPartitions, INVALID);
-        mNumberPartitionsY = typedArray.getDimensionPixelSize(R.styleable.GraphView_yPartitions, INVALID);
+        mNumberPartitionsX = typedArray.getInt(R.styleable.GraphView_xPartitions, INVALID);
+        mNumberPartitionsY = typedArray.getInt(R.styleable.GraphView_yPartitions, INVALID);
         mDashThickness = typedArray.getDimensionPixelSize(R.styleable.GraphView_dashThickness, INVALID);
+        mDashLengthMultiplier = typedArray.getDimensionPixelSize(R.styleable.GraphView_dashLengthMultiplier, INVALID);
         typedArray.recycle();
     }
 
@@ -79,6 +80,14 @@ public class GraphView extends View {
 
         if (mDashThickness == INVALID) {
             mDashThickness = (int) (AXIS_THICKNESS_MULTIPLIER * getHeight());
+        }
+
+        if (mDashLengthMultiplier == INVALID) {
+            mDashLengthMultiplier = DEFAULT_DASH_HEIGHT_MULTIPLIER;
+        }
+
+        if (mDashHeight == INVALID) {
+            mDashHeight = (int) (mDashLengthMultiplier * mAxisThickness);
         }
 
         if (mPaint == null) {
@@ -119,6 +128,8 @@ public class GraphView extends View {
         mObjectsToDraw = new ArrayList<>();
         mObjectsToDraw.add(buildHorizontalAxis(width, height));
         mObjectsToDraw.add(buildVerticalAxis(width, height));
+        mObjectsToDraw.addAll(buildHorizontalDashLines(width,height));
+        mObjectsToDraw.addAll(buildVerticalDashLines(width, height));
     }
 
     @Override
@@ -129,6 +140,37 @@ public class GraphView extends View {
         }
     }
 
+    private List<Rect> buildHorizontalDashLines(int width, int height){
+        ArrayList<Rect> result = new ArrayList<>();
+        Rect horizontalAxis = buildHorizontalAxis(width, height);
+        int spacesBetweenDashes = horizontalAxis.width() / mNumberPartitionsX;
+        int startX = 0;
+        for (int index = 0; index < mNumberPartitionsX; index++){
+            startX += spacesBetweenDashes;
+            if (DRAW_GRID_LINES){
+                result.add(new Rect(startX, 0, startX + 1, height));
+            } else {
+                result.add(new Rect(startX, horizontalAxis.top - mDashHeight, startX + mDashHeight, horizontalAxis.bottom + mDashHeight));
+            }
+        }
+        return result;
+    }
+
+    private List<Rect> buildVerticalDashLines(int width, int height){
+        ArrayList<Rect> result = new ArrayList<>();
+        Rect verticalAxis = buildVerticalAxis(width, height);
+        int spacesBetweenDashes = verticalAxis.height() / mNumberPartitionsY;
+        int startY = 0;
+        for (int index = 0; index < mNumberPartitionsY; index++){
+            startY += spacesBetweenDashes;
+            if (DRAW_GRID_LINES){
+                result.add(new Rect(0, startY, width, startY + 1));
+            } else {
+                result.add(new Rect(0, startY, verticalAxis.right + mDashHeight, startY + mDashHeight));
+            }
+        }
+        return result;
+    }
     private Rect buildVerticalAxis(int width, int height) {
         int left = getPaddingLeft();
         int top = getPaddingTop();

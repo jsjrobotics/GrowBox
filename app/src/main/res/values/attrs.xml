@@ -20,7 +20,7 @@
         <attr name="yPartitions" format="integer" />
         <attr name="axisThickness" format="dimension"/>
         <attr name="dashThickness" format="dimension" />
-
+        <attr name="dashLengthMultiplier" format="dimension" />
     </declare-styleable>
 
 </resources>
