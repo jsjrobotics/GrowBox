@@ -14,14 +14,21 @@ import java.util.List;
 
 public class GraphDisplay implements AndroidThingsDisplay {
     private View mView;
+    private GraphView mGraphView;
 
     @Override
     public View createView(GridView display) {
         LayoutInflater inflater = LayoutInflater.from(display.getContext());
         mView = inflater.inflate(R.layout.graph_display, display, false);
-        GraphView graphView = (GraphView) mView.findViewById(R.id.graph);
-        List<GraphNode> nodeList = new ArrayList<>();
-        graphView.setData(nodeList);
+        mGraphView = (GraphView) mView.findViewById(R.id.graph);
         return mView;
+    }
+
+    public void addNode(){
+
+    }
+
+    public void addNodes(List<GraphNode> nodeList) {
+        mGraphView.setData(nodeList);
     }
 }

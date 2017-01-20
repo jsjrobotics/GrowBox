@@ -32,6 +32,7 @@ public class GraphView extends View {
     private Paint mPaint;
     private int mDashHeight = INVALID;
     private float mDashLengthMultiplier = INVALID;
+    private GridBackground mGridBackground;
 
     public GraphView(Context context) {
         super(context);
@@ -126,10 +127,18 @@ public class GraphView extends View {
     public void onSizeChanged(int width, int height, int oldWidth, int oldHeight){
         init();
         mObjectsToDraw = new ArrayList<>();
-        mObjectsToDraw.add(buildHorizontalAxis(width, height));
-        mObjectsToDraw.add(buildVerticalAxis(width, height));
-        mObjectsToDraw.addAll(buildHorizontalDashLines(width,height));
-        mObjectsToDraw.addAll(buildVerticalDashLines(width, height));
+        mGridBackground = new GridBackground(
+                mNumberPartitionsX,
+                DRAW_GRID_LINES,
+                mDashHeight,
+                mNumberPartitionsY,
+                mAxisThickness,
+                getPaddingLeft(),
+                getPaddingTop(),
+                getPaddingRight(),
+                getPaddingBottom()
+        );
+        mObjectsToDraw.addAll(mGridBackground.buildRectangles(width, height));
     }
 
     @Override
@@ -140,56 +149,8 @@ public class GraphView extends View {
         }
     }
 
-    private List<Rect> buildHorizontalDashLines(int width, int height){
-        ArrayList<Rect> result = new ArrayList<>();
-        Rect horizontalAxis = buildHorizontalAxis(width, height);
-        int spacesBetweenDashes = horizontalAxis.width() / mNumberPartitionsX;
-        int startX = 0;
-        for (int index = 0; index < mNumberPartitionsX; index++){
-            startX += spacesBetweenDashes;
-            if (DRAW_GRID_LINES){
-                result.add(new Rect(startX, 0, startX + 1, height));
-            } else {
-                result.add(new Rect(startX, horizontalAxis.top - mDashHeight, startX + mDashHeight, horizontalAxis.bottom + mDashHeight));
-            }
-        }
-        return result;
-    }
-
-    private List<Rect> buildVerticalDashLines(int width, int height){
-        ArrayList<Rect> result = new ArrayList<>();
-        Rect verticalAxis = buildVerticalAxis(width, height);
-        int spacesBetweenDashes = verticalAxis.height() / mNumberPartitionsY;
-        int startY = 0;
-        for (int index = 0; index < mNumberPartitionsY; index++){
-            startY += spacesBetweenDashes;
-            if (DRAW_GRID_LINES){
-                result.add(new Rect(0, startY, width, startY + 1));
-            } else {
-                result.add(new Rect(0, startY, verticalAxis.right + mDashHeight, startY + mDashHeight));
-            }
-        }
-        return result;
-    }
-    private Rect buildVerticalAxis(int width, int height) {
-        int left = getPaddingLeft();
-        int top = getPaddingTop();
-        int right = getPaddingLeft() + mAxisThickness;
-        int bottom = height - getPaddingBottom();
-        return new Rect(left, top, right, bottom );
-    }
-
-    private Rect buildHorizontalAxis(int width, int height) {
-        int left = getPaddingLeft();
-        int top = height - mAxisThickness - getPaddingBottom();
-        int right = width - getPaddingRight();
-        int bottom = height - getPaddingBottom();
-        return new Rect(left, top, right, bottom );
-    }
-
     public void setData(List<GraphNode> nodeList) {
         mData = nodeList;
-        requestLayout();
         invalidate();
     }
 

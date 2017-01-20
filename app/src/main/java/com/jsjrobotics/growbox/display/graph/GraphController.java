@@ -11,4 +11,8 @@ public class GraphController implements AndroidThingsDisplay {
     public GraphController(GraphDisplay graphDisplay) {
         mGraphDisplay = graphDisplay;
     }
+
+    public boolean addNode(GraphController node) {
+        return false;
+    }
 }
